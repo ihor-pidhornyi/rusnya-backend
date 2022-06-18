@@ -32,10 +32,7 @@ exports.create = async (req, res) => {
 exports.get = async (req, res) => {
   try {
     const currencies = await Currency.find();
-    res.status(200).json(
-      currencies.map(
-        ({code, name, iconName, min, max, availableCurrencies, message}) => 
-        ({code, name, iconName, min, max, availableCurrencies, message})));
+    res.status(200).json(currencies);
   } catch (e) {
     console.error(e);
     res.status(500).json([]);
