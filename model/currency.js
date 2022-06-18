@@ -15,6 +15,7 @@ const currencySchema = new mongoose.Schema({
       reserve: { type: Number },
     },
   ],
+  wallet: { type: String },
   message: { type: String },
 });
 

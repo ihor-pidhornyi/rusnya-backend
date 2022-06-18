@@ -8,6 +8,7 @@ exports.create = async (req, res) => {
     min = null,
     max = null,
     availableCurrencies,
+    wallet = null,
     message = null,
   } = req.body;
 
@@ -20,6 +21,7 @@ exports.create = async (req, res) => {
       max,
       availableCurrencies,
       message,
+      wallet
     });
     res.status(200).json({ isSuccess: true });
   } catch (e) {
@@ -30,7 +32,10 @@ exports.create = async (req, res) => {
 exports.get = async (req, res) => {
   try {
     const currencies = await Currency.find();
-    res.status(200).json(currencies);
+    res.status(200).json(
+      currencies.map(
+        ({code, name, iconName, min, max, availableCurrencies, message}) => 
+        ({code, name, iconName, min, max, availableCurrencies, message})));
   } catch (e) {
     console.error(e);
     res.status(500).json([]);
@@ -76,3 +81,18 @@ exports.delete = async (req, res) => {
     res.status(500).json({ isSuccess: false });
   }
 };
+
+exports.getWalletByCurrencyCode = async (req, res) => {
+  try {
+    const currencyCode = req.params?.id;
+    const currency = await Currency.findOne({ code: currencyCode })
+    if (currency) {
+      res.status(200).json({ wallet: currency?.wallet || null });
+    } else {
+      res.status(404).json({ wallet: null });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ isSuccess: false });
+  }
+}

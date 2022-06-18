@@ -47,7 +47,7 @@ exports.getById = async (req, res) => {
 };
 exports.get = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().sort({ 'dateStart': -1 });
     res.status(200).json(orders);
   } catch (e) {
     console.error(e);

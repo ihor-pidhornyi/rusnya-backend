@@ -12,4 +12,6 @@ router.delete('/:id', auth, currenciesController.delete);
 
 router.get('/', currenciesController.get);
 
+router.get('/wallet/:id', currenciesController.getWalletByCurrencyCode)
+
 module.exports = router;
